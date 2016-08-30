@@ -8,73 +8,112 @@
 	<title>Maquina de Turing</title>
 	<!-- Bootstrap -->
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css" rel="stylesheet">
+	<link href="assets/select2/select2.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/bootstrap-tagsinput/bootstrap-tagsinput.css">
 </head>
 
 <body>
 	<div class="panel panel-default">
+
 		<div class="panel-body">
-			<div class="container">
-				<div class="row ">
-					<label for="alfabetoInicial" class="col-sm-2 control-label">Alfabeto Inicial</label>
-					<div class="col-sm-10">
-						<input type="text" data-role="tagsinput" class="form-control" id="alfabetoInicial" name="alfabetoInicial" placeholder="Digite um símbolo e pressione 'enter'">
-					</div>
-				</div>
-				<div class="row">
-					<label for="alfabetoFinal" class="col-sm-2 control-label">Alfabeto Final</label>
-					<div class="col-sm-10">
-						<input type="text" data-role="tagsinput" class="form-control" id="alfabetoFinal" name="alfabetoFinal" placeholder="Digite um símbolo e pressione 'enter'">
+			<div class="row ">
+
+				<div class="container-fluid">
+					<!--Uma Máquina de Turing de uma fita é definida por <strong>M = (Q, &Sigma;, &Gamma;, s, &epsilon;, F, &delta;)</strong>-->
+					<div class="row ">
+						<label for="alfabetoInicial" class="col-xs-12 col-sm-12 col-md-12 col-lg-12  control-label">
+								Alfabeto (conjunto finito de símbolos) aceito pela máquina.
+							</label>
+						<label for="alfabetoInicial" class="col-sm-1 control-label">
+								<strong>&Sigma;</strong> = 
+							</label>
+						<div class="col-sm-11">
+							<input type="text" data-role="tagsinput" class="form-control" id="alfabetoInicial" name="alfabetoInicial" placeholder="Digite um símbolo e pressione 'enter'">
+						</div>
 					</div>
 
+					<div class="row ">
+						<label for="alfabetoFinal" class="col-xs-12 col-sm-12 col-md-12 col-lg-12  control-label">
+								Alfabeto final que será escrito na fita
+							</label>
+						<label for="alfabetoFinal" class="col-sm-1 control-label">
+								<strong>&Gamma;</strong> = 
+							</label>
+						<div class="col-sm-11">
+							<input type="text" data-role="tagsinput" class="form-control" id="alfabetoFinal" name="alfabetoFinal" placeholder="Digite um símbolo e pressione 'enter'">
+						</div>
+					</div>
+
+					<!--<div class="row">-->
+					<!--	<label for="alfabetoFinal" class="col-sm-3 control-label">Alfabeto Final</label>-->
+					<!--	<div class="col-sm-9">-->
+					<!--		<input type="text" data-role="tagsinput" class="form-control" id="alfabetoFinal" name="alfabetoFinal" placeholder="Digite um símbolo e pressione 'enter'">-->
+					<!--	</div>-->
+					<!--</div>-->
+
+					<div class="row ">
+						<label for="simboloVazio" class="col-xs-12 col-sm-12 col-md-12 col-lg-12  control-label">
+								Símbolo que representa vazio
+							</label>
+						<label for="simboloVazio" class="col-sm-1 control-label">
+							<strong>&epsilon; &isin; &Gamma;</strong> = 
+							</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="simboloVazio" name="simboloVazio" placeholder="*">
+						</div>
+					</div>
+
+
+					<!--<div class="row">-->
+					<!--	<label for="simboloVazio" class="col-sm-3 control-label">Simbolo vazio</label>-->
+					<!--	<div class="col-sm-2">-->
+					<!--		<input type="text" class="form-control" id="simboloVazio" name="simboloVazio" placeholder="*">-->
+					<!--	</div>-->
+					<!--</div>-->
+					<!--<div class="row">-->
+					<!--	<label for="qtdEstados" class="col-sm-2 control-label">Quantidade de Estados</label>-->
+					<!--	<div class="col-sm-2">-->
+					<!--		<input type="number" class="form-control" id="qtdEstados" name="qtdEstados" placeholder="1">-->
+					<!--	</div>-->
+					<!--</div>-->
 				</div>
 				<div class="row">
-					<label for="simboloVazio" class="col-sm-2 control-label">Simbolo vazio</label>
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="simboloVazio" name="simboloVazio" placeholder="*">
+					<label for="txtfiletoread" class="col-sm-3 control-label">Arquivo com os estados</label>
+					<div class="col-sm-4">
+						<input type="file" id="txtfiletoread" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12  btn btn-success" />
 					</div>
 				</div>
-				<div class="row">
-					<label for="qtdEstados" class="col-sm-2 control-label">Quantidade de Estados</label>
-					<div class="col-sm-2">
-						<input type="number" class="form-control" id="qtdEstados" name="qtdEstados" placeholder="1">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="button" id="botaoProsseguir" class="btn btn-success">Prosseguir</button>
-					</div>
+
+
+				<!--<div class="row">-->
+				<!--	<div class="container">-->
+				<!--		<input type="file" id="txtfiletoread" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12  btn btn-success" />-->
+				<!--	</div>-->
+				<!--</div>-->
+			</div>
+			<div class="row">
+				<div id="maquina">
+
 				</div>
 			</div>
 			<div class="row">
-				<div class="table-responsive col-sm-12">
-					<table class="table table-hover" border="2" id="tabelaEstados" name="tabelaEstados">
-						<thead>
-							<tr>
-								<th>Estado Nº</th>
-								<th>Transições</th>
-								<th>Inicial</th>
-								<th>Final</th>
-								<!--<th>Opções</th>-->
-							</tr>
-						</thead>
-						<!--<tfoot>-->
-						<!--	<tr>-->
-						<!--		<td colspan="5" style="text-align: left;">-->
-						<!--			<button class="btn btn-large btn-success" onclick="addEstado()" type="button">Adicionar Estado</button>-->
-						<!--		</td>-->
-						<!--	</tr>-->
-						<!--</tfoot>-->
-					</table>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+					<label for="alfabetoNaFita" class="col-xs-12 col-sm-12 col-md-12 col-lg-12  control-label">Alfabeto na fita</label>
+					<input type="text" class="form-control" id="alfabetoNaFita" name="alfabetoNaFita">
 				</div>
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<button type="button" id="botaoCalcular" class="btn btn-warning">Calular</button>
-					</div>
+				<div class="col-sm-3">
+					<button type="button" id="botaoCalcular" class="btn btn-lg btn-warning">Calular</button>
 				</div>
 			</div>
 		</div>
+
+		<ul class="list-unstyled">
+			<li><strong>Q</strong> é um conjunto finito de estados.</li>
+			<li><strong>s &isin; Q</strong> é o estado inicial.</li>
+
+			<li><strong>F &sube; Q</strong> é o conjunto dos estados finais.</li>
+			<li><strong>&delta; : (Q x &Gamma;) &rArr; (Q x &Gamma; [L, R, S])</strong> é a função de transição, onde L é o movimento para a esquerda, R é o movimento para a direita na fita e S é quando a fita fica parada.</li>
+		</ul>
 		<div class="panel-footer">Tiago Possato - 2016</div>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -82,12 +121,72 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/pt-BR.js"></script>
+	<script type="text/javascript" src="assets/select2/select2.full.js"></script>
+	<script type="text/javascript" src="assets/select2/pt-BR.js"></script>
 	<script type="text/javascript" src="assets/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
+	<script type="text/javascript">
+		/*global maquinaDeTuring*/
+		/*global calculaMaquina*/
+		/*global $*/
+		$("#botaoCalcular").click(function(e) {
+			maquinaDeTuring.alfabetoInicial = $("#alfabetoInicial").tagsinput('items');
+			maquinaDeTuring.alfabetoFinal = $("#alfabetoFinal").tagsinput('items');
+			maquinaDeTuring.simboloVazio = $("#simboloVazio").val();
+			// maquinaDeTuring.qtdEstados = $("#qtdEstados").val();
+
+			if (maquinaDeTuring.simboloVazio !== "" && maquinaDeTuring.alfabetoFinal.indexOf(maquinaDeTuring.simboloVazio) === -1) maquinaDeTuring.alfabetoFinal.push(maquinaDeTuring.simboloVazio);
+
+			maquinaDeTuring.alfabetoNaFita = String($("#alfabetoNaFita").val());
+			maquinaDeTuring.alfabetoNaFita += maquinaDeTuring.simboloVazio;
+
+			calculaMaquina(maquinaDeTuring);
+		});
+
+		$(window).load(function() {
+			maquinaDeTuring = new MaquinaDeTuring();
+			//Check the support for the File API support
+			if (window.File && window.FileReader && window.FileList && window.Blob) {
+				var fileSelected = document.getElementById('txtfiletoread');
+				fileSelected.addEventListener('change', function(e) {
+					//Get the file object
+					var fileTobeRead = fileSelected.files[0];
+					//Initialize the FileReader object to read the file
+					var fileReader = new FileReader();
+					fileReader.onload = function(e) {
+						var dados = fileReader.result;
+						//console.log(dados);
+						maquinaDeTuring.estados = JSON.parse(dados);
+						//console.log(maquinaDeTuring.estados);
+						for (var i = 0; i < maquinaDeTuring.estados.length; i++) {
+							if (maquinaDeTuring.estados[i].estadoInicial) {
+								maquinaDeTuring.estadoInicial = i;
+								break;
+							}
+						}
+					}
+					fileReader.readAsText(fileTobeRead);
+				}, false);
+			}
+			else {
+				alert("Arquivo(s) não suportado(s)");
+			}
+		});
+
+		// String.prototype.replaceAt = function(index, character) {
+		// 	return this.substr(0, index) + character + this.substr(index + character.length);
+		// }
+
+		function setCharAt(str, index, chr) {
+			console.log(typeof str);
+			console.log(str);
+			console.log(index);
+			console.log(chr);
+			if (index > str.length - 1) return str;
+			return str.substr(0, index) + chr + str.substr(index + 1);
+		}
+	</script>
 	<script type="text/javascript" src="assets/maquina-turing.js"></script>
-	<script type="text/javascript" src="assets/interface.js"></script>
 
 </body>
 
