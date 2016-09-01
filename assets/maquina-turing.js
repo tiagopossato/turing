@@ -36,11 +36,12 @@ function Transicao() {
     var lidoNaFita;
     var escritoNaFita;
     var movimento;
-    
+
     this.proximoEstado = 0;
     this.lidoNaFita = null;
     this.escritoNaFita = null;
     this.movimento = 0;
+
 };
 
 var maquinaDeTuring;
@@ -57,7 +58,7 @@ var calculaMaquina = function(mq) {
 
         //console.log("Fita[" + cabecote + "] = " + mq.alfabetoNaFita[cabecote]);
         // console.log("estadoAtual:" + estadoAtual);
-        var saida = "\t(Q[" + estadoAtual + "], Lido: " + mq.alfabetoNaFita[cabecote] + ") => (";
+        var saida = "\t(Q[" + estadoAtual + "], Lido: " + mq.alfabetoNaFita[cabecote] + ") => ";
         for (var i = 0; i < mq.estados[estadoAtual].transicoes.length; i++) {
             if (mq.estados[estadoAtual].transicoes[i].lidoNaFita === mq.alfabetoNaFita[cabecote]) {
 
@@ -98,5 +99,41 @@ var calculaMaquina = function(mq) {
     }
     console.log("Execução encerrada!");
     console.log(mq);
+
+}
+
+var mostraMaquina = function() {
+    console.log(maquinaDeTuring);
+    var trs = "[\n";
+    var ests = "Q={";
+    for (var i = 0; i < maquinaDeTuring.estados.length; i++) {
+        ests+="q"+i+", ";
+        for (var j = 0; j < maquinaDeTuring.estados[i].transicoes.length; j++) {
+            trs += "\t(q" + i + ", \'" + maquinaDeTuring.estados[i].transicoes[j].lidoNaFita + "\') => ";
+            trs += "(q" + maquinaDeTuring.estados[i].transicoes[j].proximoEstado + ", \'" +
+                maquinaDeTuring.estados[i].transicoes[j].escritoNaFita +
+                "\' , ";
+            switch (parseInt(maquinaDeTuring.estados[i].transicoes[j].movimento)) {
+                case -1:
+                    trs += "L)\n";
+                    break;
+                case 0:
+                    trs += "S)\n";
+                    break;
+                case 1:
+                    trs += "R)\n";
+                    break;
+            }
+        }
+    }
+    ests+="}";
+    trs+="\n]";
+    console.log("Alfabeto Inicial = "+maquinaDeTuring.alfabetoInicial);
+    console.log("Alfabeto Final = "+maquinaDeTuring.alfabetoFinal);
+    console.log("Estado Final = ver isso");
+    
+    console.log(ests);
+    console.log(trs);
+    
 
 }
