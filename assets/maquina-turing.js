@@ -1,15 +1,14 @@
 /*global $*/
+/*global setCharAt*/
 
 function MaquinaDeTuring() {
     var alfabetoInicial;
     var alfabetoFinal;
     var alfabetoNaFita;
     var simboloVazio;
-    // var qtdEstados;
     var estados;
     var estadoInicial;
 
-    // this.qtdEstados = 0;
     this.estados = [];
     this.alfabetoFinal = [];
     this.alfabetoInicial = [];
@@ -53,8 +52,6 @@ var calculaMaquina = function(mq) {
     while (cabecote < mq.alfabetoNaFita.length) {
         var palavraValida = false;
 
-        //console.log("Fita[" + cabecote + "] = " + mq.alfabetoNaFita[cabecote]);
-        // console.log("estadoAtual:" + estadoAtual);
         var saida = "\t(Q[" + estadoAtual + "], Lido: " + mq.alfabetoNaFita[cabecote] + ") => ";
         for (var i = 0; i < mq.estados[estadoAtual].transicoes.length; i++) {
             if (mq.estados[estadoAtual].transicoes[i].lidoNaFita === mq.alfabetoNaFita[cabecote]) {
@@ -64,23 +61,17 @@ var calculaMaquina = function(mq) {
 
                 mq.alfabetoNaFita = setCharAt(mq.alfabetoNaFita, cabecote, mq.estados[estadoAtual].transicoes[i].escritoNaFita);
 
-                //mq.alfabetoFinal = mq.alfabetoFinal.replaceAt(cabecote, mq.estados[estadoAtual].transicoes[i].escritoNaFita);
                 cabecote += parseInt(mq.estados[estadoAtual].transicoes[i].movimento); //movimenta o cabeçote de leitura
                 estadoAtual = parseInt(mq.estados[estadoAtual].transicoes[i].proximoEstado);
 
                 palavraValida = true;
 
-                // console.log("Transicao encontrada no estado: ");
-                // console.log(mq.estados[estadoAtual].transicoes[i]);
-
                 break;
             }
         }
-        // console.log("proximoEstado: " + estadoAtual);
 
         if (!palavraValida) {
-            console.log("Nenhuma Transicao encontrada na posicao: " + cabecote + ", Caracter: " + mq.alfabetoNaFita[cabecote]);
-            //console.log("A palavra não é válida!");
+            $("#resultado").html("Nenhuma Transicao encontrada na posicao: " + cabecote + ", Caracter: " + mq.alfabetoNaFita[cabecote]);
             break;
         }
 
@@ -89,28 +80,29 @@ var calculaMaquina = function(mq) {
     }
     console.log("}");
     if (mq.estados[estadoAtual].estadoFinal) {
-        alert("Palavra válida!");
+        $("#resultado").html("Palavra válida!");
     }
     else {
-        alert("Palavra inválida!");
+        $("#resultado").html("Palavra inválida!");
     }
     console.log("Execução encerrada!");
-    maquinaDeTuring.alfabetoNaFita = maquinaDeTuring.alfabetoNaFita.substr(0, maquinaDeTuring.alfabetoNaFita.length-1);
-    mostraMaquina();
-}
+    // maquinaDeTuring.alfabetoNaFita = maquinaDeTuring.alfabetoNaFita.substr(0, maquinaDeTuring.alfabetoNaFita.length - 1);
+    $("#fitaCalculada").val(maquinaDeTuring.alfabetoNaFita);
+    $("#saida").show('slow');
+};
 
 var mostraMaquina = function() {
 
     console.log(maquinaDeTuring);
-
+$("#maquina").show('slow');
     var trs = "";
     var ests = "<strong>Q</strong>={";
-    var finais = "<strong>F</strong>={"
+    var finais = "<strong>F</strong>={";
     for (var i = 0; i < maquinaDeTuring.estados.length; i++) {
         ests += "q" + i + ", ";
-        
+
         if (maquinaDeTuring.estados[i].estadoFinal) finais += "q" + i + ", ";
-        
+
         for (var j = 0; j < maquinaDeTuring.estados[i].transicoes.length; j++) {
             trs += "\t&nbsp;&nbsp;&nbsp;&nbsp;<strong>&delta;</strong>(q" + i + ", \'" + maquinaDeTuring.estados[i].transicoes[j].lidoNaFita + "\') = ";
             trs += "(q" + maquinaDeTuring.estados[i].transicoes[j].proximoEstado + ", \'" +
@@ -129,21 +121,20 @@ var mostraMaquina = function() {
             }
         }
     }
-    
-    ests = ests.substr(0, ests.length-2);
+
+    ests = ests.substr(0, ests.length - 2);
     ests += "}";
-    finais = finais.substr(0, finais.length-2);
-    finais +="}";
-    
+    finais = finais.substr(0, finais.length - 2);
+    finais += "}";
+
     $("#conjuntoEstados").html(ests);
-    $("#alfabetoEntrada").html("<strong>&Sigma;</strong> = {" + maquinaDeTuring.alfabetoInicial+"}");
-    $("#alfabetoDaFita").html("<strong>&Gamma;</strong> = {"+maquinaDeTuring.alfabetoFinal+"}");
+    $("#alfabetoEntrada").html("<strong>&Sigma;</strong> = {" + maquinaDeTuring.alfabetoInicial + "}");
+    $("#alfabetoDaFita").html("<strong>&Gamma;</strong> = {" + maquinaDeTuring.alfabetoFinal + "}");
     $("#funcaoTransicao").html(trs);
     $("#estadoInicial").html("<strong>S</strong> = q" + maquinaDeTuring.estadoInicial);
-    $("#branco").html("<strong>&epsilon;</strong> = "+maquinaDeTuring.simboloVazio);
+    $("#branco").html("<strong>&epsilon;</strong> = " + maquinaDeTuring.simboloVazio);
     $("#estadosFinais").html(finais);
+
+    $("#entrada").show('slow');
     
-    $("#panel-body").hide();
-    $("#maquina").show();
-    $("#maquina2").show();
-}
+};
